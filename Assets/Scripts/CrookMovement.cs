@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class CrookMovement : MonoBehaviour
 {
+    [SerializeField] private float _speed = 2f;
+    [SerializeField] private Transform _targetPoint;
+
     private Transform _transform;
 
     private void Start()
@@ -14,8 +17,12 @@ public class CrookMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        _transform.position += new Vector3(Time.fixedDeltaTime, 0,0);
-    }
-
-    
+        if (_targetPoint != null)
+        {
+            _transform.position = Vector3.MoveTowards
+                (_transform.position,
+                _targetPoint.position,
+                _speed * Time.fixedDeltaTime);
+        }
+    }    
 }
