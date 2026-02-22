@@ -23,14 +23,6 @@ public class Signaling : MonoBehaviour
     }
 
 
-    private void FixedUpdate()
-    {
-        if (_audioSource.volume <= 0f)
-        {
-            StopCoroutine(VolumeDown());
-        }
-    }
-
     public void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.GetComponent<CrookMovement>())
@@ -68,30 +60,23 @@ public class Signaling : MonoBehaviour
 
     private IEnumerator VolumeUp()
     {
-        while (true)
+        while (_audioSource.volume < 1.0f)
         {
-            if (_audioSource.volume < 1.0f)
-            {
-                _audioSource.volume += Time.fixedDeltaTime;
-            }
+            _audioSource.volume += Time.fixedDeltaTime;
             yield return null;
         }
     }
 
     private IEnumerator VolumeDown()
     {
-        while (true)
+        while (_audioSource.volume > 0f)
         {
-            if (_audioSource.volume > 0f)
-            {
-                _audioSource.volume -= Time.fixedDeltaTime;
-            }
+            _audioSource.volume -= Time.fixedDeltaTime;
             yield return null;
-
-            if (_audioSource.volume <= 0f)
-            {
-                _audioSource.Stop();
-            }
+        }
+        if (_audioSource.volume <= 0f)
+        {
+            _audioSource.Stop();
         }
     }
 }
