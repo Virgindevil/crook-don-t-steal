@@ -15,14 +15,14 @@ public class CrookMovement : MonoBehaviour
         _transform = GetComponent<Transform>();
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
-        if (_targetPoint != null)
+        if (_targetPoint)
         {
             _transform.position = Vector3.MoveTowards
                 (_transform.position,
                 _targetPoint.position,
-                _speed * Time.fixedDeltaTime);
+                _speed * Time.deltaTime);
         }
     }    
 }
